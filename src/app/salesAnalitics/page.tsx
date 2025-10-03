@@ -1,7 +1,7 @@
 export default function SalesAnalyticsPage() {
   return (
     <div>
-      <h1>Sales Analytics</h1>
+      <h1>Orders</h1>
     </div>
   );
 }
