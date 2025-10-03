@@ -28,8 +28,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div>
-          <SidebarProvider>
+        <div className=" bg-gray-50">
+          <SidebarProvider className="flex gap-4">
             <AppSidebar />
             {children}
           </SidebarProvider>
