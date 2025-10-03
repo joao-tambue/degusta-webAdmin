@@ -15,8 +15,7 @@ import {
 
 export default function Page() {
   return (
-    <SidebarProvider>
-      <AppSidebar />
+      
       <SidebarInset>
         <header className="flex h-14 shrink-0 items-center gap-2">
           <div className="flex flex-1 items-center gap-2 px-3">
@@ -48,6 +47,6 @@ export default function Page() {
           <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min" />
         </div>
       </SidebarInset>
-    </SidebarProvider>
+    
   )
 }
