@@ -34,9 +34,9 @@ export default function RootLayout({
         className={`${inter.variable} ${inter.className} antialiased`}
       >
         <div className=" bg-gray-50">
-          <SidebarProvider className="flex gap-4">
+          <SidebarProvider className="flex gap-1">
             <AppSidebar />
-            {children}
+            <div className="flex-1">{children}</div>
           </SidebarProvider>
         </div>
       </body>
