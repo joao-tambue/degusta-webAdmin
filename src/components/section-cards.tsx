@@ -30,7 +30,10 @@ export function SectionCards({title, price, imgUrl, analitics, clients}: Section
                 {clients &&<p className="text-2xl font-semibold text-slate-800">{clients}</p>}
             </div>
             <div className="flex flex-col gap-1">
-                <p style={{ color: analiticsColor }} className="text-[14px] flex  justify-end"> {analitics}</p>
+                <p style={{ color: analiticsColor }} 
+                className="text-[14px] flex  justify-end"> 
+                {analitics}
+                </p>
                 <Image src={imgUrl} alt={title} width={100} height={100} className="w-[75px] h-[30px]" />
             </div>
         </div>
