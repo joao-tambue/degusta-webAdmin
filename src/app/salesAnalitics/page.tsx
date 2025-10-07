@@ -1,6 +1,6 @@
 import { NavActions } from '@/components/nav-actions';
 import { SectionCards } from '@/components/section-cards';
-
+import { ChartItem } from './components/chart';
 export default function SalesAnalyticsPage() {
     const cardsData = [
       { title: 'Total Sales', price: '$25,000', imgUrl: 'Vector-4.svg', analitics: '+22%' },
@@ -16,7 +16,7 @@ export default function SalesAnalyticsPage() {
             <NavActions />
        </header>
         {/* the section of  cards with analitics and charts */}
-       <section>
+       <section className='flex flex-col gap-5'>
             <div className=' mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4'>
              {cardsData.map((c, i) => (
             <SectionCards  
@@ -27,6 +27,9 @@ export default function SalesAnalyticsPage() {
              analitics={c.analitics}
             />  
              ))}
+            </div>
+            <div>
+                <ChartItem />
             </div>
        </section>
     </div>
