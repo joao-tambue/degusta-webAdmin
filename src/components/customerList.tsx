@@ -33,7 +33,7 @@ const statusColors: Record<Customer["status"], string> = {
 
 const CustomerList: FC = () => {
   return (
-    <div className="bg-white rounded-xl shadow-sm p-6 w-[1216px] h-[830px]">
+    <div className="bg-white rounded-xl shadow-sm p-6 w-full h-[830px]">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold text-gray-700">Lista de clientes</h2>
         <button className="text-sm text-gray-500 hover:text-gray-700">More</button>

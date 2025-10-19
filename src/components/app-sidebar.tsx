@@ -49,13 +49,13 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/dashboard",
       icon: Home,
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "Analise de Vendas",
+          url: "/dashboard/salesAnalistcs",
         },
         {
           title: "Starred",
@@ -69,12 +69,12 @@ const data = {
     },
     {
       title: "Orders",
-      url: "#",
+      url: "/order",
       icon: Layout,
       items: [
         {
           title: "Genesis",
-          url: "#",
+          url: "order",
         },
         {
           title: "Explorer",

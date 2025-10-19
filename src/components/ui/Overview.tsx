@@ -55,7 +55,7 @@ export default function SalesOverview() {
         </a>
       </div>
 
-      <div className="h-64">
+      <div className="h-82">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={data}

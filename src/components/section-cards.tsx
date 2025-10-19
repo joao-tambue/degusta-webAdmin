@@ -22,7 +22,7 @@ type SectionCardsProps = {
 export function SectionCards({title, price, imgUrl, analitics, clients}: SectionCardsProps) {
     const analiticsColor = getAnaliticsColor(title);
     return (
-        <div className="bg-white max-w-2xs w-full max-h-28 h-full flex gap-2 
+        <div className="bg-[#FFFFFF] border border-gray-400/20 w-full max-h-28 h-full flex gap-2 
         justify-between items-center p-4 rounded-lg">
             <div className="flex flex-col gap-1">
                 <h2 className="text-[14px] text-gray-500 font-medium">{title}</h2>

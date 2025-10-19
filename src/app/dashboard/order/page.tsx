@@ -3,7 +3,7 @@ import { AppSidebar } from "@/components/app-sidebar";
 export default function OrderPage () {
     return (
         <div>
-            <AppSidebar />
+            <h1>Hello Word</h1>
         </div>
     )
 }
