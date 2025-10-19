@@ -20,7 +20,8 @@ import ChartLineDots from "@/components/charts/chart-line-dots";
 
 
 import SalesOverview from "@/components/ui/Overview";
-import CustomerList from "@/components/customerList";
+import { DataTable } from "@/components/table/data-table";
+import data from "./data.json";
 
 const cardsData = [
       { title: 'Total Sales', price: '$25,000', imgUrl: '/Vector-4.svg', analitics: '+22%' },
@@ -80,8 +81,8 @@ export default function Page() {
               <ChartPieDonutText />
               <ChartLineDots />
             </div>
-            <div>
-              <CustomerList />
+            <div className="">
+              <DataTable data={data} />
             </div>
           </div>
         </section>
