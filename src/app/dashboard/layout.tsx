@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
+import { AppSidebar } from "@/components/app-sidebar"
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 export const metadata: Metadata = {
-  title: "Dashboard - Degusta",
-  description: " Dashboard page for Degusta application",
+  title: "Formulario de login - Degusta",
+  description: "Login page for Degusta application",
 };
 
 export default function RootLayout({
@@ -17,7 +18,12 @@ export default function RootLayout({
       <body
         className={`antialiased`}
       >
-        {children}
+        <div className=" bg-gray-50">
+          <SidebarProvider className="flex gap-1">
+            <AppSidebar />
+            <div className="flex-1">{children}</div>
+          </SidebarProvider>
+        </div>
       </body>
     </html>
   );

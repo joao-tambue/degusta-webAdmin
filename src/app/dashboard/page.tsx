@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { AppSidebar } from "@/components/app-sidebar";
 import { NavActions } from "@/components/nav-actions";
 import {
   Breadcrumb,
@@ -12,7 +11,6 @@ import {
 import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
-  SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 
@@ -89,11 +87,10 @@ const stats = [
 ];
 
 export default function Page() {
-  const [title, setTitle] = useState<string>("Dashboard");
+  const [title] = useState<string>("Dashboard");
 
   return (
-    <SidebarProvider>
-      <AppSidebar />
+      
       <SidebarInset>
      
         <header className="flex h-14 shrink-0 items-center gap-2">
@@ -165,6 +162,6 @@ export default function Page() {
           </div>
         </div>
       </SidebarInset>
-    </SidebarProvider>
-  );
+    
+  )
 }
