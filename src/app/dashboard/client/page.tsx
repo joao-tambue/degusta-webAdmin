@@ -7,9 +7,10 @@ import { ChartItem } from './components/chart';
 import { SidebarInset, SidebarTrigger } from '@/components/ui/sidebar';
 import { Separator } from '@radix-ui/react-separator';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from '@/components/ui/breadcrumb';
-import OrdersTable from '@/components/table/orders-table';
+import { DataTable } from "@/components/table/data-table";
+import data from "../data.json";
 
-export default function SalesAnalyticsPage() {
+export default function ClientPage() {
     const cardsData = [
       { title: 'Total Sales', price: '$25,000', imgUrl: '/Vector-4.svg', analitics: '+22%' },
       { title: 'Clientes', price: '920', imgUrl: '/Vector-5.svg', analitics: '-83%' },
@@ -48,20 +49,20 @@ export default function SalesAnalyticsPage() {
        <section className='flex flex-col gap-5'>
           <div className=' mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4'>
              {cardsData.map((c, i) => (
-              <SectionCards  
-                key={i}
-                title={c.title}
-                price={c.price}
-                imgUrl={c.imgUrl}
-                analitics={c.analitics}
-              />  
+            <SectionCards  
+             key={i}
+             title={c.title}
+             price={c.price}
+             imgUrl={c.imgUrl}
+             analitics={c.analitics}
+            />  
              ))}
           </div>
           <div>
             <ChartItem />
           </div>
-          <div>
-            <OrdersTable />
+          <div className="">
+            <DataTable data={data} />
           </div>
        </section>
     </div>

@@ -52,85 +52,26 @@ const data = {
       url: "/dashboard",
       icon: Home,
       isActive: true,
-      items: [
-        {
-          title: "Analise de Vendas",
-          url: "/dashboard/salesAnalistcs",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
     },
     {
-      title: "Orders",
-      url: "/order",
+      title: "Analise de vendas",
+      url: "/dashboard/salesAnalistcs",
       icon: Layout,
-      items: [
-        {
-          title: "Genesis",
-          url: "order",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
     },
     {
       title: "Produtos",
-      url: "#",
+      url: "/dashboard/produtos",
       icon: ShoppingBag,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
+    },
+    {
+      title: "Estoque",
+      url: "/dashboard/estoque",
+      icon: ShoppingBag,
     },
     {
       title: "Definições",
       url: "#",
       icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
     },
   ],
 }
