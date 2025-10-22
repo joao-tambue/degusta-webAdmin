@@ -1,0 +1,72 @@
+:root {
+  --brand: #FF8901;
+}
+
+/* --- Ajustes gerais --- */
+button,
+.badge,
+input:focus,
+select:focus,
+.tab-active {
+  --primary: var(--brand);
+  color: var(--brand);
+}
+
+.btn-primary {
+  background-color: var(--brand) !important;
+  color: #fff !important;
+}
+
+.btn-primary:hover {
+  background-color: #e37d00 !important;
+}
+
+/* --- Responsividade --- */
+@media (max-width: 1024px) {
+  .data-table {
+    padding: 1rem;
+  }
+
+  .data-table .table-container {
+    overflow-x: auto;
+  }
+
+  .data-table th,
+  .data-table td {
+    white-space: nowrap;
+    font-size: 0.85rem;
+  }
+
+  .data-table .actions {
+    display: flex;
+    gap: 0.25rem;
+  }
+
+  .drawer-content {
+    height: 90vh;
+    border-radius: 1rem 1rem 0 0;
+  }
+
+  .drawer-footer {
+    padding-bottom: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .data-table {
+    padding: 0.5rem;
+  }
+
+  .data-table .btn,
+  .data-table .select-trigger {
+    width: 100%;
+  }
+
+  .data-table .tabs-list {
+    display: none;
+  }
+
+  .data-table .mobile-tabs {
+    display: block;
+  }
+}

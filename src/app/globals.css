@@ -118,3 +118,56 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* ===== Scrollbar Customization ===== */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--muted);
+  border-radius: var(--radius-md);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FF8901;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--muted);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ff9e33;
+  box-shadow: 0 0 10px #ff890180;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #FF8901 var(--muted);
+}
+
+/* Dark Mode Adjustments */
+.dark ::-webkit-scrollbar-track {
+  background: var(--muted);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #FF8901;
+  border: 2px solid var(--muted);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #ff9e33;
+  box-shadow: 0 0 10px #ff890180;
+}
+
+/* ===== Glassmorphism vibe ===== */
+::-webkit-scrollbar-thumb {
+  backdrop-filter: blur(6px);
+  background: linear-gradient(180deg, #ff8901cc 0%, #ffb066cc 100%);
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ff8901 0%, #ff9e33 100%);
+}
