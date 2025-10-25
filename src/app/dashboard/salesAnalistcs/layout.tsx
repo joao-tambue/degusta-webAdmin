@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import "../../globals.css";
-import { AppSidebar } from "@/components/app-sidebar"
-import { SidebarProvider } from "@/components/ui/sidebar";
 
 export const metadata: Metadata = {
   title: "Analise de vendas",
@@ -14,12 +12,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <body
-        className={`antialiased`}
-      >
-        <div className=" bg-gray-50">
-          <div className="flex-1">{children}</div>
-        </div>
-      </body>
+    <div className=" bg-gray-50">
+      <div className="flex-1">{children}</div>
+    </div>
   );
 }
