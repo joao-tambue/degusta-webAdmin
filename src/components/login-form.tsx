@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import Image from "next/image"
 import Link from "next/link"
 
 export function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
@@ -41,11 +40,11 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
                 </p>
               </div>
               <div className="grid gap-3">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">Número</Label>
                 <Input
                    id="phone"
                   type="text"
-                  placeholder="923456748"
+                  placeholder="Ex: 923456748"
                   value={formData.phone}
                   onChange={handleChange}
                   required
@@ -70,6 +69,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
                   required
                  />
               </div>
+              {error && <p className="text-red-500 text-center">{error}</p>}
               <Button disabled={loading} type="submit" className="w-full bg-[#FF8901] hover:bg-[#e87701]">
                 {loading ? "..." : "Login"}
               </Button>
