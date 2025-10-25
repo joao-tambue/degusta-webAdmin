@@ -14,7 +14,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
       <body
         className={`antialiased`}
       >
@@ -22,6 +21,5 @@ export default function RootLayout({
           <div className="flex-1">{children}</div>
         </div>
       </body>
-    </html>
   );
 }

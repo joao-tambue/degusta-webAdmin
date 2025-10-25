@@ -1,19 +1,44 @@
+'use client'
+
+import {useState} from 'react'
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils"
+import { useAuthStore } from "@/store/useAuthStore";
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
 
-export function RegisterForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+export function RegisterForm({className,...props }: React.ComponentProps<"div">) {
+  const { register, loading, error } = useAuthStore();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+  });
+
+  const router = useRouter();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await register(formData);
+
+    if (useAuthStore.getState().user) {
+      router.push("/dashboard");
+    }
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
+          <form onSubmit={handleSubmit} className="p-6 md:p-8">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-2xl font-bold">Crie uma conta</h1>
@@ -25,17 +50,21 @@ export function RegisterForm({
                 <Label htmlFor="email">Nome completo</Label>
                 <Input
                   id="name"
-                  type="name"
+                  type="text"
                   placeholder="Insira o nome"
+                  value={formData.name}
+                  onChange={handleChange}
                   required
                 />
               </div>
               <div className="grid gap-3">
                 <Label htmlFor="cargo">Cargo</Label>
                 <Input
-                  id="cargo"
-                  type="cargo"
-                  placeholder="Insira o seu cargo"
+                  id="phone"
+                  type="text"
+                  placeholder="Insira o telefone"
+                  value={formData.phone}
+                  onChange={handleChange}
                   required
                 />
               </div>
@@ -45,6 +74,8 @@ export function RegisterForm({
                   id="email"
                   type="email"
                   placeholder="m@example.com"
+                  value={formData.email}
+                  onChange={handleChange}
                   required
                 />
               </div>
@@ -58,11 +89,24 @@ export function RegisterForm({
                     Esqueceu o seu password?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input 
+                  id="password"
+                  type="password"
+                  placeholder="********"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                 />
               </div>
-              <Button type="submit" className="w-full bg-[#FF8901] hover:bg-[#e87701]">
-                Login
+              <Button
+                type="submit"
+                className="w-full bg-[#FF8901] hover:bg-[#e87701]"
+                disabled={loading}
+              >
+                {loading ? "..." : "Registrar"}
               </Button>
+
+              {error && <p className="text-red-500 text-center">{error}</p>}
               <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
                 <span className="bg-card text-muted-foreground relative z-10 px-2">
                   Ou continue com
@@ -98,9 +142,9 @@ export function RegisterForm({
                 </Button>
               </div>
               <div className="text-center text-sm">
-                Não tem uma conta ?{" "}
+                Já tem uma conta ?{" "}
                 <Link href="/" className="underline underline-offset-4">
-                  Registrar
+                  Login
                 </Link>
               </div>
             </div>
