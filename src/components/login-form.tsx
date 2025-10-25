@@ -1,3 +1,8 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/useAuthStore";
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -6,15 +11,28 @@ import { Label } from "@/components/ui/label"
 import Image from "next/image"
 import Link from "next/link"
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+export function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
+  const router = useRouter();
+  const { login, loading, error } = useAuthStore();
+  const [formData, setFormData] = useState({ phone: "", password: "" });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await login(formData);
+
+    const token = localStorage.getItem("accessToken");
+    if (token) router.push("/dashboard");
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
+          <form onSubmit={handleSubmit} className="p-6 md:p-8">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-2xl font-bold">Bem-Vindo de Volta</h1>
@@ -25,9 +43,11 @@ export function LoginForm({
               <div className="grid gap-3">
                 <Label htmlFor="email">Email</Label>
                 <Input
-                  id="email"
-                  type="email"
-                  placeholder="m@example.com"
+                   id="phone"
+                  type="text"
+                  placeholder="923456748"
+                  value={formData.phone}
+                  onChange={handleChange}
                   required
                 />
               </div>
@@ -41,10 +61,17 @@ export function LoginForm({
                     Esqueceu o seu password?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="********"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                 />
               </div>
-              <Button type="submit" className="w-full bg-[#FF8901] hover:bg-[#e87701]">
-                Login
+              <Button disabled={loading} type="submit" className="w-full bg-[#FF8901] hover:bg-[#e87701]">
+                {loading ? "..." : "Login"}
               </Button>
               <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
                 <span className="bg-card text-muted-foreground relative z-10 px-2">
