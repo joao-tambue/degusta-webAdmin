@@ -1,53 +1,56 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Image from "next/image"
 import { Plus, Upload, Download, Edit2, Trash2, Eye } from "lucide-react"
 import AddProductModal from "./add-produto/add-product-modal"
+import { api } from "@/services/api"
 
 type Product = {
-  id: string
+  id: number
   name: string
-  code: string
+  slug: string
   description: string
-  supplier: string
-  category: string
   price: string
-  quantidade: string
-  status: "Ativo" | "Inativo"
-  image?: string
+  stock: string
+  image: string
 }
 
 export default function InventoryTable() {
-  const [items, setItems] = useState<Product[]>([
-    {
-      id: "1",
-      name: "Café Torrado",
-      code: "PRD001",
-      description: "Pacote de café torrado 500g",
-      supplier: "Delta",
-      category: "Bebidas",
-      price: "12.50",
-      quantidade: "40",
-      status: "Ativo",
-    },
-    {
-      id: "2",
-      name: "Açúcar Refinado",
-      code: "PRD002",
-      description: "Pacote de 1kg",
-      supplier: "Zimbo",
-      category: "Alimentos",
-      price: "6.00",
-      quantidade: "60",
-      status: "Ativo",
-    },
-  ])
+  const [items, setItems] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
   const [page, setPage] = useState(1)
   const [showModal, setShowModal] = useState(false)
   const perPage = 8
   const totalPages = Math.ceil(items.length / perPage)
   const paginated = items.slice((page - 1) * perPage, page * perPage)
+
+  // 🧩 Consumir o endpoint
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await api.get("/get-products/")
+        setItems(response.data)
+      } catch (err: any) {
+        console.error("Erro ao buscar produtos:", err)
+        setError("Falha ao carregar produtos 😢")
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchProducts()
+  }, [])
+
+  if (loading) {
+    return <div className="p-6 text-gray-600">Carregando produtos...</div>
+  }
+
+  if (error) {
+    return <div className="p-6 text-red-500">{error}</div>
+  }
 
   return (
     <div className="">
@@ -81,12 +84,9 @@ export default function InventoryTable() {
             <thead>
               <tr className="text-xs text-gray-500 text-left border-b">
                 <th className="py-3 pl-4 w-[260px]">Produto</th>
-                <th className="py-3">Quantidade</th>
+                <th className="py-3">Estoque</th>
                 <th className="py-3">Descrição</th>
-                <th className="py-3">Fornecedor</th>
-                <th className="py-3">Categoria</th>
                 <th className="py-3">Valor</th>
-                <th className="py-3">Status</th>
                 <th className="py-3 pr-4 text-right">Ação</th>
               </tr>
             </thead>
@@ -112,21 +112,14 @@ export default function InventoryTable() {
                     </div>
                     <div>
                       <div className="font-medium text-gray-800">{p.name}</div>
-                      <div className="text-xs text-gray-500">
-                        {p.category} • {p.supplier}
-                      </div>
+                      <div className="text-xs text-gray-500">{p.slug}</div>
                     </div>
                   </td>
-                  <td className="py-4">{p.quantidade}</td>
+                  <td className="py-4">{p.stock}</td>
                   <td className="py-4 text-gray-600 text-xs">
                     {p.description}
                   </td>
-                  <td className="py-4">{p.supplier}</td>
-                  <td className="py-4">{p.category}</td>
                   <td className="py-4">{p.price}</td>
-                  <td className="py-4">
-                    <StatusBadge status={p.status} />
-                  </td>
                   <td className="py-4 pr-4 text-right">
                     <div className="inline-flex items-center gap-2">
                       <IconButton title="Ver" Icon={Eye} />
@@ -184,6 +177,7 @@ export default function InventoryTable() {
   )
 }
 
+// Componente de botão
 function IconButton({ title, Icon, danger }: { title: string; Icon: any; danger?: boolean }) {
   return (
     <button
@@ -196,20 +190,5 @@ function IconButton({ title, Icon, danger }: { title: string; Icon: any; danger?
     >
       <Icon size={14} />
     </button>
-  )
-}
-
-function StatusBadge({ status }: { status: Product["status"] }) {
-  const isActive = status === "Ativo"
-  return (
-    <span
-      className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
-        isActive
-          ? "bg-green-100 text-green-800"
-          : "bg-red-100 text-red-800"
-      }`}
-    >
-      {status}
-    </span>
   )
 }

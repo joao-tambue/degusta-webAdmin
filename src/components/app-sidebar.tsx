@@ -64,8 +64,8 @@ const data = {
       icon: ShoppingBag,
     },
     {
-      title: "Estoque",
-      url: "/dashboard/estoque",
+      title: "Motoboy",
+      url: "/dashboard/motoboys",
       icon: ShoppingBag,
     },
     {
