@@ -20,13 +20,14 @@ interface AuthState {
     password: string;
   }) => Promise<void>;
   login: (data: { phone: string; password: string }) => Promise<void>;
+  getUser: () => Promise<void>;
   logout: () => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
-  accessToken: null,
-  refreshToken: null,
+  accessToken: localStorage.getItem("accessToken") || null,
+  refreshToken: localStorage.getItem("refreshToken") || null,
   loading: false,
   error: null,
 
@@ -36,11 +37,11 @@ export const useAuthStore = create<AuthState>((set) => ({
     try {
       const response = await api.post("/auth/admin/register/", data);
       set({ user: response.data, loading: false });
-      console.log("✅ Usuário registrado:", response.data);
+      console.log("Usuário registrado:", response.data);
     } catch (error: any) {
       const msg = error.response?.data?.message || "Erro ao registrar usuário.";
       set({ error: msg, loading: false });
-      console.error("❌ Erro no register:", msg);
+      console.error("Erro no register:", msg);
     }
   },
 
@@ -51,7 +52,6 @@ export const useAuthStore = create<AuthState>((set) => ({
       const response = await api.post("/auth/admin/login/", data);
       const { acess, refresh } = response.data;
 
-      // Salva tokens no estado e localStorage
       set({
         accessToken: acess,
         refreshToken: refresh,
@@ -61,11 +61,35 @@ export const useAuthStore = create<AuthState>((set) => ({
       localStorage.setItem("accessToken", acess);
       localStorage.setItem("refreshToken", refresh);
 
-      console.log("✅ Login bem-sucedido:", response.data);
+      console.log("Login bem-sucedido:", response.data);
     } catch (error: any) {
       const msg = error.response?.data?.message || "Telefone ou senha inválidos.";
       set({ error: msg, loading: false });
-      console.error("❌ Erro no login:", msg);
+      console.error("Erro no login:", msg);
+    }
+  },
+
+  //GET USER
+  getUser: async () => {
+    set({ loading: true, error: null });
+    try {
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        set({ loading: false });
+        return;
+      }
+
+      const response = await api.get("/auth/me/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      set({ user: response.data, loading: false });
+      console.log("Usuário logado:", response.data);
+    } catch (error: any) {
+      console.error("Erro ao buscar usuário:", error);
+      set({ error: "Erro ao buscar informações do usuário", loading: false });
     }
   },
 
