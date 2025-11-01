@@ -1,5 +1,7 @@
+"use client";
+
 import { create } from "zustand";
-import { api } from "@/services/api";
+import api from "@/services/api";
 
 interface User {
   name?: string;
@@ -26,8 +28,8 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
-  accessToken: localStorage.getItem("accessToken") || null,
-  refreshToken: localStorage.getItem("refreshToken") || null,
+  accessToken: null,
+  refreshToken: null,
   loading: false,
   error: null,
 
@@ -46,43 +48,55 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   // LOGIN
-  login: async (data) => {
-    set({ loading: true, error: null });
-    try {
-      const response = await api.post("/auth/admin/login/", data);
-      const { acess, refresh } = response.data;
+login: async (data) => {
+  set({ loading: true, error: null });
+  try {
+    const response = await api.post("/auth/admin/login/", data);
+    const { access, refresh } = response.data;
 
-      set({
-        accessToken: acess,
-        refreshToken: refresh,
-        loading: false,
-      });
-
-      localStorage.setItem("accessToken", acess);
+    if (typeof window !== "undefined") {
+      // Armazena no localStorage
+      localStorage.setItem("accessToken", access);
       localStorage.setItem("refreshToken", refresh);
 
-      console.log("Login bem-sucedido:", response.data);
-    } catch (error: any) {
-      const msg = error.response?.data?.message || "Telefone ou senha inválidos.";
-      set({ error: msg, loading: false });
-      console.error("Erro no login:", msg);
+      // Armazena também nos cookies — pro middleware conseguir ler
+      document.cookie = `token=${access}; path=/; max-age=86400; SameSite=Lax`;
     }
-  },
 
-  //GET USER
+    set({
+      accessToken: access,
+      refreshToken: refresh,
+      loading: false,
+    });
+
+    console.log("Login bem-sucedido:", response.data);
+  } catch (error: any) {
+    const msg =
+      error.response?.data?.message || "Telefone ou senha inválidos.";
+    set({ error: msg, loading: false });
+    console.error("Erro no login:", msg);
+  }
+},
+
+
+  // GET USER
   getUser: async () => {
     set({ loading: true, error: null });
+
     try {
-      const token = localStorage.getItem("accessToken");
+      let token: string | null = null;
+
+      if (typeof window !== "undefined") {
+        token = localStorage.getItem("accessToken");
+      }
+
       if (!token) {
         set({ loading: false });
         return;
       }
 
       const response = await api.get("/auth/me/", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       set({ user: response.data, loading: false });
@@ -95,8 +109,18 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   // LOGOUT
   logout: () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+    }
     set({ user: null, accessToken: null, refreshToken: null });
   },
 }));
+
+// Inicializa tokens no cliente
+if (typeof window !== "undefined") {
+  const accessToken = localStorage.getItem("accessToken");
+  const refreshToken = localStorage.getItem("refreshToken");
+
+  useAuthStore.setState({ accessToken, refreshToken });
+}

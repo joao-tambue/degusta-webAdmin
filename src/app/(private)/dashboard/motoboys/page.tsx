@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import { api } from "@/services/api"
+import api from "@/services/api"
 import { Plus, Phone, User, Hash } from "lucide-react"
 
 type Motoboy = {

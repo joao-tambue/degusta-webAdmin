@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "../globals.css";
+import "../../globals.css";
 import { AppSidebar } from "@/components/app-sidebar"
 import { SidebarProvider } from "@/components/ui/sidebar";
 
@@ -14,17 +14,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
-      <body
-        className={`antialiased`}
-      >
-        <div className=" bg-gray-50">
-          <SidebarProvider className="flex gap-1">
-            <AppSidebar />
-            <div className="flex-1">{children}</div>
-          </SidebarProvider>
-        </div>
-      </body>
-    </html>
+    <div className=" bg-gray-50">
+      <SidebarProvider className="flex gap-1">
+        <AppSidebar />
+        <div className="flex-1">{children}</div>
+      </SidebarProvider>
+    </div>
   );
 }
