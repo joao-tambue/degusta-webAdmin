@@ -43,22 +43,22 @@ export default function Produtos () {
                 </div>
             </header>
             <div className='px-6'>
-                <section className='flex flex-col gap-5'>
-                    <div className=' mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4'>
-                        {cardsData.map((c, i) => (
-                            <SectionCards  
-                                key={i}
-                                title={c.title}
-                                price={c.price}
-                                imgUrl={c.imgUrl}
-                                analitics={c.analitics}
-                            />  
-                        ))}
-                    </div>
-                    <div>
-                        <InventoryTable />
-                    </div>
-                </section>
+              <section className='flex flex-col gap-5'>
+                <div className=' mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4'>
+                  {cardsData.map((c, i) => (
+                    <SectionCards  
+                      key={i}
+                      title={c.title}
+                      price={c.price}
+                      imgUrl={c.imgUrl}
+                      analitics={c.analitics}
+                    />  
+                  ))}
+                </div>
+                <div className="mb-4">
+                  <InventoryTable />
+                </div>
+              </section>
             </div>
               
         </SidebarInset>
