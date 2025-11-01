@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react"
 import Image from "next/image"
 import { Plus, Upload, Download, Edit2, Trash2, Eye } from "lucide-react"
 import AddProductModal from "./add-produto/add-product-modal"
-import { api } from "@/services/api"
+import api from "@/services/api"
 
 type Product = {
   id: number
@@ -27,7 +27,6 @@ export default function InventoryTable() {
   const totalPages = Math.ceil(items.length / perPage)
   const paginated = items.slice((page - 1) * perPage, page * perPage)
 
-  // 🧩 Consumir o endpoint
   useEffect(() => {
     const fetchProducts = async () => {
       try {
