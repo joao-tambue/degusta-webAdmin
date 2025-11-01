@@ -5,6 +5,7 @@ import {
   ArrowDown,
   ArrowUp,
   Bell,
+  BellDot,
   Copy,
   CornerUpLeft,
   CornerUpRight,
@@ -111,7 +112,7 @@ export function NavActions() {
         Jun 01 - Jan 02, 2024
       </div>
       <Button variant="ghost" size="icon" className="h-7 w-7">
-        <Star />
+        <Bell />
       </Button>
       <Popover open={isOpen} onOpenChange={setIsOpen}>
         <PopoverTrigger asChild>
